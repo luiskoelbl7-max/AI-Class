@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="de" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1. FC Court - Kleinfeldliga FFBÖ (4. Liga Süd Liesing)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            900: '#064e3b',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                        },
+                        pitch: '#11291b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Teko', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .bg-pitch-pattern {
+            background-color: #0d1f14;
+            background-image: radial-gradient(#10b981 0.75px, transparent 0.75px), radial-gradient(#10b981 0.75px, #0d1f14 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0,15px 15px;
+            background-opacity: 0.15;
+        }
+
+        .pitch-board {
+            background: linear-gradient(180deg, #0e2e1b 0%, #081d11 100%);
+            border: 3px solid #10b981;
+            position: relative;
+        }
+        .pitch-board::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(16, 185, 129, 0.4);
+            transform: translateY(-50%);
+        }
+        .pitch-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            border: 2px solid rgba(16, 185, 129, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .glow-emerald {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
+        }
+        .glow-gold {
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-black">
+
+    <nav class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-emerald-500/20 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-shield-halved text-slate-950"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-black tracking-wider text-white font-display uppercase block leading-none">1. FC Court</span>
+                    <span class="text-xs text-emerald-400 font-medium tracking-widest block">FFBÖ • LIESING SÜD</span>
+                </div>
+            </a>
+
+            <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-emerald-400 text-2xl p-2 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-semibold tracking-wide">
+                <a href="#match" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5"><i class="fa-regular fa-clock text-emerald-500"></i> Next Match</a>
+                <a href="#schedule" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-calendar-days text-emerald-500"></i> Fixtures & Results</a>
+                <a href="#squad" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-people-group text-emerald-500"></i> Tactics & Squad</a>
+                <a href="#table" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-list-ol text-emerald-500"></i> League Table</a>
+                <a href="#strafen" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-jar text-gold-400"></i> Fine Jar</a>
+                <a href="#wheel" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-beer-mug-empty text-gold-400"></i> Pub Wheel</a>
+                <a href="#spotify" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5"><i class="fa-brands fa-spotify text-emerald-400"></i> Spotify Playlist</a>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden pt-3 pb-2 px-2 border-t border-slate-800 mt-2 space-y-2 text-sm font-semibold">
+            <a href="#match" class="block py-2 px-3 rounded hover:bg-slate-800 text-slate-200 hover:text-emerald-400"><i class="fa-regular fa-clock mr-2 text-emerald-400"></i> Next Match</a>
+            <a href="#schedule" class="block py-2 px-3 rounded hover:bg-slate-800 text-slate-200 hover:text-emerald-400"><i class="fa-solid fa-calendar-days mr-2 text-emerald-400"></i> Fixtures & Results</a>
+            <a href="#squad" class="block py-2 px-3 rounded hover:bg-slate-800 text-slate-200 hover:text-emerald-400"><i class="fa-solid fa-people-group mr-2 text-emerald-400"></i> Tactics & Squad</a>
+            <a href="#table" class="block py-2 px-3 rounded hover:bg-slate-800 text-slate-200 hover:text-emerald-400"><i class="fa-solid fa-list-ol mr-2 text-emerald-400"></i> League Table</a>
+            <a href="#strafen" class="block py-2 px-3 rounded hover:bg-slate-800 text-slate-200 hover:text-gold-400"><i class="fa-solid fa-jar mr-2 text-gold-400"></i> Fine Jar (Bier-Kasse)</a>
+            <a href="#wheel" class="block py-2 px-3 rounded hover:bg-slate-800 text-slate-200 hover:text-gold-400"><i class="fa-solid fa-beer-mug-empty mr-2 text-gold-400"></i> Pub Wheel</a>
+            <a href="#spotify" class="block py-2 px-3 rounded hover:bg-slate-800 text-slate-200 hover:text-emerald-400"><i class="fa-brands fa-spotify mr-2 text-emerald-400"></i> Locker Room Spotify</a>
+        </div>
+    </nav>
+
+    <header class="relative overflow-hidden bg-slate-900 border-b border-slate-800 py-16 px-4">
+        <div class="absolute inset-0 bg-pitch-pattern opacity-30"></div>
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                Kleinfeldliga FFBÖ • 4. Liga Süd (Wien Liesing)
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-black font-display tracking-tight text-white uppercase mb-4">
+                1. FC COURT <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-gold-400">WIEN</span>
+            </h1>
+
+            <p class="text-xl md:text-2xl text-slate-300 font-light max-w-2xl mx-auto italic mb-8">
+                "Kein Platz zu klein, kein Tor zu weit!" ⚽🍺
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4 text-sm font-bold">
+                <a href="#match" class="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 font-black shadow-lg hover:brightness-110 transition flex items-center gap-2">
+                    <i class="fa-solid fa-trophy"></i> DERBY COUNTDOWN
+                </a>
+                <a href="#strafen" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 transition flex items-center gap-2">
+                    <i class="fa-solid fa-coins text-gold-400"></i> STRAFENKATALOG
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="match" class="py-16 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white font-display tracking-wide uppercase">
+                <i class="fa-solid fa-fire text-emerald-400 mr-2"></i> NEXT MATCH SPOTLIGHT
+            </h2>
+            <p class="text-slate-400 text-sm">4. Liga Süd • Matchday at FC Inzersdorf</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden border border-emerald-500/30 glow-emerald">
+            <!-- Fixture Matchup Card -->
+            <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-6 text-center mb-8 pb-8 border-b border-slate-800">
+                <!-- Home Team -->
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-2xl bg-slate-800 border-2 border-slate-700 flex items-center justify-center text-3xl text-slate-400 mb-3 shadow-md">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <span class="text-2xl font-black font-display text-white">BIANCOROSSI</span>
+                    <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">HOME (5th Place)</span>
+                </div>
+
+                <!-- VS Badge -->
+                <div class="flex flex-col items-center my-2 md:my-0">
+                    <span class="text-xs font-black uppercase tracking-widest text-slate-400 mb-1">4. LIGA SÜD</span>
+                    <div class="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-black text-xl text-gold-400">
+                        VS
+                    </div>
+                    <span class="text-xs text-emerald-400 mt-2 font-semibold"><i class="fa-solid fa-location-dot text-red-500"></i> FC Inzersdorf Ground</span>
+                </div>
+
+                <!-- Away Team -->
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-2xl bg-slate-800 border-2 border-emerald-400 flex items-center justify-center text-3xl text-emerald-400 mb-3 shadow-md">
+                        <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                    </div>
+                    <span class="text-2xl font-black font-display text-white">1. FC COURT</span>
+                    <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">GUEST (3rd Place)</span>
+                </div>
+            </div>
+
+            <!-- COUNTDOWN TIMER -->
+            <div class="mb-8 text-center">
+                <span class="text-xs uppercase font-extrabold tracking-widest text-slate-400 block mb-3">KICKOFF COUNTDOWN</span>
+                <div class="grid grid-cols-4 gap-2 md:gap-4 max-w-xl mx-auto">
+                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl">
+                        <span id="cd-days" class="text-3xl md:text-5xl font-black font-display text-emerald-400 block">00</span>
+                        <span class="text-[10px] md:text-xs text-slate-400 uppercase font-semibold">Days</span>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl">
+                        <span id="cd-hours" class="text-3xl md:text-5xl font-black font-display text-emerald-400 block">00</span>
+                        <span class="text-[10px] md:text-xs text-slate-400 uppercase font-semibold">Hours</span>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl">
+                        <span id="cd-mins" class="text-3xl md:text-5xl font-black font-display text-emerald-400 block">00</span>
+                        <span class="text-[10px] md:text-xs text-slate-400 uppercase font-semibold">Minutes</span>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl">
+                        <span id="cd-secs" class="text-3xl md:text-5xl font-black font-display text-gold-400 block">00</span>
+                        <span class="text-[10px] md:text-xs text-slate-400 uppercase font-semibold">Seconds</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MATCH DETAILS & ACTION BUTTONS -->
+            <div class="bg-slate-900/80 rounded-xl p-4 md:p-6 border border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="space-y-1 text-center md:text-left text-sm">
+                    <p class="text-white font-bold"><i class="fa-solid fa-calendar-day text-emerald-400 mr-2"></i> Sunday, Oct 25, 2026 @ 19:00 CEST</p>
+                    <p class="text-slate-300"><i class="fa-solid fa-location-dot text-emerald-400 mr-2"></i> FC Inzersdorf (Vorarlberger Allee 22, 1230 Wien)</p>
+                    <p class="text-slate-400 text-xs"><i class="fa-solid fa-whistle text-slate-400 mr-2"></i> FFBÖ Official Match • Kunstrasen Platz</p>
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <button id="addCalBtn" onclick="downloadICS()" class="px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase transition flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-plus"></i> Add to Calendar (.ics)
+                    </button>
+                    <a href="https://maps.google.com/?q=FC+Inzersdorf+Vorarlberger+Allee+22+1230+Wien" target="_blank" class="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs tracking-wider uppercase border border-slate-700 transition flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot text-emerald-400"></i> FC Inzersdorf Directions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="schedule" class="py-16 px-4 max-w-6xl mx-auto border-t border-slate-800">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white font-display tracking-wide uppercase">
+                <i class="fa-solid fa-calendar-days text-emerald-400 mr-2"></i> SEASON MATCH SCHEDULE & RESULTS
+            </h2>
+            <p class="text-slate-400 text-sm">Overview of recent results and upcoming 4. Liga Süd fixtures</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- RECENT MATCH RESULTS -->
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+                <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+                    <h3 class="font-extrabold text-white text-base uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-square-check text-emerald-400"></i> Recent Results
+                    </h3>
+                    <span class="text-xs bg-emerald-500/10 text-emerald-400 font-bold px-2.5 py-1 rounded">2 Wins • 1 Loss</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800">
+                        <div class="text-xs font-semibold text-slate-400">Round 1</div>
+                        <div class="text-sm font-bold text-white flex items-center gap-2">
+                            <span>FC Union 12</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-black">2 - 5</span>
+                            <span class="text-emerald-400 font-extrabold">1. FC Court</span>
+                        </div>
+                        <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">W</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800">
+                        <div class="text-xs font-semibold text-slate-400">Round 2</div>
+                        <div class="text-sm font-bold text-white flex items-center gap-2">
+                            <span class="text-emerald-400 font-extrabold">1. FC Court</span>
+                            <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-400 font-black">2 - 3</span>
+                            <span>FC Vie United</span>
+                        </div>
+                        <span class="text-xs px-2 py-0.5 rounded bg-red-500/20 text-red-400 font-bold">L</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800">
+                        <div class="text-xs font-semibold text-slate-400">Round 3</div>
+                        <div class="text-sm font-bold text-white flex items-center gap-2">
+                            <span>FC Atzgersdorf</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-black">3 - 5</span>
+                            <span class="text-emerald-400 font-extrabold">1. FC Court</span>
+                        </div>
+                        <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">W</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UPCOMING FIXTURES -->
+            <div class="glass-card rounded-2xl p-6 border border-emerald-500/30">
+                <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+                    <h3 class="font-extrabold text-white text-base uppercase flex items-center gap-2">
+                        <i class="fa-regular fa-clock text-emerald-400"></i> Upcoming Match Schedule
+                    </h3>
+                    <span class="text-xs bg-slate-800 text-slate-300 font-bold px-2.5 py-1 rounded">4. Liga Süd</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-emerald-500/40">
+                        <div class="text-xs text-emerald-400 font-bold">Oct 25 • 19:00</div>
+                        <div class="text-sm font-bold text-white flex items-center gap-2">
+                            <span>Biancorossi</span>
+                            <span class="text-xs font-black text-gold-400">VS</span>
+                            <span class="text-emerald-400">1. FC Court</span>
+                        </div>
+                        <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded uppercase">Next Up</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800">
+                        <div class="text-xs text-slate-400 font-semibold">Nov 01 • 17:00</div>
+                        <div class="text-sm font-bold text-white flex items-center gap-2">
+                            <span class="text-emerald-400">1. FC Court</span>
+                            <span class="text-xs font-black text-slate-500">VS</span>
+                            <span>SKV Aksaray</span>
+                        </div>
+                        <span class="text-xs text-slate-400 font-semibold">Inzersdorf</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800">
+                        <div class="text-xs text-slate-400 font-semibold">Nov 08 • 18:00</div>
+                        <div class="text-sm font-bold text-white flex items-center gap-2">
+                            <span>Viktoria Altmannsdorf</span>
+                            <span class="text-xs font-black text-slate-500">VS</span>
+                            <span class="text-emerald-400">1. FC Court</span>
+                        </div>
+                        <span class="text-xs text-slate-400 font-semibold">Inzersdorf</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800">
+                        <div class="text-xs text-slate-400 font-semibold">Nov 15 • 18:00</div>
+                        <div class="text-sm font-bold text-white flex items-center gap-2">
+                            <span class="text-emerald-400">1. FC Court</span>
+                            <span class="text-xs font-black text-slate-500">VS</span>
+                            <span>FC Wiesen</span>
+                        </div>
+                        <span class="text-xs text-slate-400 font-semibold">Inzersdorf</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="squad" class="py-16 px-4 bg-slate-900/50 border-y border-slate-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white font-display tracking-wide uppercase">
+                    <i class="fa-solid fa-chess-board text-emerald-400 mr-2"></i> 5+1 TACTICS BOARD & SQUAD
+                </h2>
+                <p class="text-slate-400 text-sm">Click any player on the pitch or roster to view official player stats</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- TACTICAL PITCH VISUALIZER (5+1 SETUP) -->
+                <div class="lg:col-span-7">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">STARTING LINEUP (5+1 Formation)</span>
+                        <div class="flex gap-2">
+                            <button onclick="setTactics('2-2-1')" class="px-2.5 py-1 text-xs font-bold rounded bg-slate-800 hover:bg-emerald-600 text-slate-300 hover:text-black border border-slate-700 transition">2-2-1</button>
+                            <button onclick="setTactics('3-1-1')" class="px-2.5 py-1 text-xs font-bold rounded bg-slate-800 hover:bg-emerald-600 text-slate-300 hover:text-black border border-slate-700 transition">3-1-1</button>
+                            <button onclick="setTactics('1-3-1')" class="px-2.5 py-1 text-xs font-bold rounded bg-slate-800 hover:bg-emerald-600 text-slate-300 hover:text-black border border-slate-700 transition">1-3-1</button>
+                        </div>
+                    </div>
+
+                    <div id="pitchBoard" class="pitch-board rounded-2xl h-[420px] p-4 flex flex-col justify-between shadow-2xl overflow-hidden relative">
+                        <!-- Goal Areas -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-12 border-b-2 border-x-2 border-emerald-500/40 rounded-b-xl"></div>
+                        <div class="pitch-circle"></div>
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-12 border-t-2 border-x-2 border-emerald-500/40 rounded-t-xl"></div>
+
+                        <!-- STRIKER (TOP) -->
+                        <div class="flex justify-center z-10">
+                            <div onclick="selectPlayer('linz')" class="group cursor-pointer flex flex-col items-center">
+                                <div class="w-11 h-11 rounded-full bg-emerald-500 text-slate-950 font-black text-sm flex items-center justify-center border-2 border-white shadow-lg group-hover:scale-110 transition">#12</div>
+                                <span class="text-[11px] font-bold text-white bg-slate-950/80 px-2 py-0.5 rounded mt-1">Linz (#12)</span>
+                            </div>
+                        </div>
+
+                        <!-- MIDFIELD (MIDDLE) -->
+                        <div id="midfieldRow" class="flex justify-around items-center z-10 px-6">
+                            <div onclick="selectPlayer('urban')" class="group cursor-pointer flex flex-col items-center">
+                                <div class="w-11 h-11 rounded-full bg-emerald-500 text-slate-950 font-black text-sm flex items-center justify-center border-2 border-white shadow-lg group-hover:scale-110 transition">#8</div>
+                                <span class="text-[11px] font-bold text-white bg-slate-950/80 px-2 py-0.5 rounded mt-1">Urban (#8)</span>
+                            </div>
+                            <div onclick="selectPlayer('henkes')" class="group cursor-pointer flex flex-col items-center">
+                                <div class="w-11 h-11 rounded-full bg-emerald-500 text-slate-950 font-black text-sm flex items-center justify-center border-2 border-white shadow-lg group-hover:scale-110 transition">#21</div>
+                                <span class="text-[11px] font-bold text-white bg-slate-950/80 px-2 py-0.5 rounded mt-1">Henkes (#21)</span>
+                            </div>
+                        </div>
+
+                        <!-- DEFENSE (LOWER) -->
+                        <div id="defenseRow" class="flex justify-around items-center z-10 px-8">
+                            <div onclick="selectPlayer('siebert')" class="group cursor-pointer flex flex-col items-center">
+                                <div class="w-11 h-11 rounded-full bg-emerald-500 text-slate-950 font-black text-sm flex items-center justify-center border-2 border-white shadow-lg group-hover:scale-110 transition">#15</div>
+                                <span class="text-[11px] font-bold text-white bg-slate-950/80 px-2 py-0.5 rounded mt-1">Siebert (#15)</span>
+                            </div>
+                            <div onclick="selectPlayer('stefan')" class="group cursor-pointer flex flex-col items-center">
+                                <div class="w-11 h-11 rounded-full bg-emerald-500 text-slate-950 font-black text-sm flex items-center justify-center border-2 border-white shadow-lg group-hover:scale-110 transition">#11</div>
+                                <span class="text-[11px] font-bold text-white bg-slate-950/80 px-2 py-0.5 rounded mt-1">Stefan (#11)</span>
+                            </div>
+                        </div>
+
+                        <!-- GOALKEEPER (BOTTOM) -->
+                        <div class="flex justify-center z-10">
+                            <div onclick="selectPlayer('passler_s')" class="group cursor-pointer flex flex-col items-center">
+                                <div class="w-11 h-11 rounded-full bg-gold-400 text-slate-950 font-black text-sm flex items-center justify-center border-2 border-white shadow-lg group-hover:scale-110 transition">#TW</div>
+                                <span class="text-[11px] font-bold text-white bg-slate-950/80 px-2 py-0.5 rounded mt-1">Passler (TW)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PLAYER STAT CARD & ROSTER FILTER -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- SELECTED PLAYER DETAIL CARD -->
+                    <div id="playerCard" class="glass-card rounded-2xl p-6 border border-emerald-500/30">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div id="pCardNum" class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-500 to-emerald-400 text-slate-950 font-black text-2xl flex items-center justify-center shadow-lg">
+                                #TW
+                            </div>
+                            <div>
+                                <h3 id="pCardName" class="text-2xl font-black text-white font-display uppercase">Stephan Passler</h3>
+                                <p id="pCardPos" class="text-xs text-emerald-400 font-extrabold uppercase">Torwart • Österreich • 25 Jahre</p>
+                            </div>
+                        </div>
+
+                        <p id="pCardBio" class="text-slate-300 text-xs mb-4 italic leading-relaxed">
+                            "Official goalkeeper for 1. FC Court in FFBÖ Kleinfeldliga."
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                                <span id="pCardRating" class="text-xl font-black text-emerald-400 block">8.5</span>
+                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Avg Rating</span>
+                            </div>
+                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                                <span id="pCardGoals" class="text-xl font-black text-emerald-400 block">0</span>
+                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Goals</span>
+                            </div>
+                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                                <span id="pCardYellows" class="text-xl font-black text-gold-400 block">0</span>
+                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Cards</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FULL SQUAD ROSTER LIST -->
+                    <div class="glass-card rounded-2xl p-5 border border-slate-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <span class="text-xs font-bold text-slate-300 uppercase block">OFFICIAL SQUAD ROSTER</span>
+                                <span class="text-[10px] text-slate-400">28 Registered Players (Avg Age: 24.8)</span>
+                            </div>
+                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">FFBÖ Registered</span>
+                        </div>
+                        <!-- Search / Filter Input for Squad -->
+                        <div class="mb-3">
+                            <input type="text" id="squadSearch" onkeyup="filterSquad()" placeholder="Search player by name, number, nationality..." class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div id="squadContainer" class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                            <!-- Populated dynamically with all 28 squad players -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="table" class="py-16 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white font-display tracking-wide uppercase">
+                <i class="fa-solid fa-list-ol text-emerald-400 mr-2"></i> 4. LIGA SÜD STANDINGS
+            </h2>
+            <p class="text-slate-400 text-sm">Official FFBÖ Kleinfeldliga Standings</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-8 glass-card rounded-2xl p-4 md:p-6 border border-slate-800 overflow-x-auto">
+                <table class="w-full text-left text-sm text-slate-200">
+                    <thead class="text-xs uppercase bg-slate-900/80 text-slate-400 border-b border-slate-800">
+                        <tr>
+                            <th scope="col" class="p-3">#</th>
+                            <th scope="col" class="p-3">Team</th>
+                            <th scope="col" class="p-3 text-center">P</th>
+                            <th scope="col" class="p-3 text-center">W-D-L</th>
+                            <th scope="col" class="p-3 text-center">GD</th>
+                            <th scope="col" class="p-3 text-center">Pts</th>
+                            <th scope="col" class="p-3 text-center hidden sm:table-cell">Form</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 text-xs md:text-sm">
+                        <tr class="hover:bg-slate-800/40">
+                            <td class="p-3 text-slate-400">1</td>
+                            <td class="p-3 font-bold text-white">FC Wiesen</td>
+                            <td class="p-3 text-center">3</td>
+                            <td class="p-3 text-center text-xs">3-0-0</td>
+                            <td class="p-3 text-center text-emerald-400">+20</td>
+                            <td class="p-3 text-center font-black text-white">9</td>
+                            <td class="p-3 text-center hidden sm:table-cell">
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/40">
+                            <td class="p-3 text-slate-400">2</td>
+                            <td class="p-3 font-bold text-white">Viktoria Altmannsdorf</td>
+                            <td class="p-3 text-center">3</td>
+                            <td class="p-3 text-center text-xs">3-0-0</td>
+                            <td class="p-3 text-center text-emerald-400">+16</td>
+                            <td class="p-3 text-center font-black text-white">9</td>
+                            <td class="p-3 text-center hidden sm:table-cell">
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                            </td>
+                        </tr>
+
+                        <!-- 1. FC COURT HIGHLIGHTED -->
+                        <tr class="bg-emerald-900/30 border-y border-emerald-500/40">
+                            <td class="p-3 font-black text-emerald-400">3</td>
+                            <td class="p-3 font-black text-white flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> 
+                                <span class="text-emerald-400">1. FC COURT</span>
+                            </td>
+                            <td class="p-3 text-center font-bold">3</td>
+                            <td class="p-3 text-center text-xs font-bold">2-0-1</td>
+                            <td class="p-3 text-center text-emerald-400 font-bold">+7</td>
+                            <td class="p-3 text-center font-black text-emerald-400 text-base">6</td>
+                            <td class="p-3 text-center hidden sm:table-cell">
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400">L</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-slate-800/40">
+                            <td class="p-3 text-slate-400">4</td>
+                            <td class="p-3 font-bold text-slate-300">FC Vie United</td>
+                            <td class="p-3 text-center">3</td>
+                            <td class="p-3 text-center text-xs">2-0-1</td>
+                            <td class="p-3 text-center text-emerald-400">+5</td>
+                            <td class="p-3 text-center font-black text-white">6</td>
+                            <td class="p-3 text-center hidden sm:table-cell">
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400">L</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/40">
+                            <td class="p-3 text-slate-400">5</td>
+                            <td class="p-3 font-bold text-slate-300">Biancorossi</td>
+                            <td class="p-3 text-center">3</td>
+                            <td class="p-3 text-center text-xs">2-0-1</td>
+                            <td class="p-3 text-center text-emerald-400">+3</td>
+                            <td class="p-3 text-center font-black text-white">6</td>
+                            <td class="p-3 text-center hidden sm:table-cell">
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400">L</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/40">
+                            <td class="p-3 text-slate-400">6</td>
+                            <td class="p-3 font-bold text-slate-300">SKV Aksaray</td>
+                            <td class="p-3 text-center">3</td>
+                            <td class="p-3 text-center text-xs">1-1-1</td>
+                            <td class="p-3 text-center text-emerald-400">+2</td>
+                            <td class="p-3 text-center font-black text-white">4</td>
+                            <td class="p-3 text-center hidden sm:table-cell">
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400">L</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400">L</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/40">
+                            <td class="p-3 text-slate-400">7</td>
+                            <td class="p-3 font-bold text-slate-300">FC Union 12</td>
+                            <td class="p-3 text-center">3</td>
+                            <td class="p-3 text-center text-xs">1-0-2</td>
+                            <td class="p-3 text-center text-red-400">-3</td>
+                            <td class="p-3 text-center font-black text-white">3</td>
+                            <td class="p-3 text-center hidden sm:table-cell">
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400">L</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400">L</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/40">
+                            <td class="p-3 text-slate-400">8</td>
+                            <td class="p-3 font-bold text-slate-300">FC Atzgersdorf Royal</td>
+                            <td class="p-3 text-center">3</td>
+                            <td class="p-3 text-center text-xs">1-0-2</td>
+                            <td class="p-3 text-center text-red-400">-13</td>
+                            <td class="p-3 text-center font-black text-white">3</td>
+                            <td class="p-3 text-center hidden sm:table-cell">
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">W</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400">L</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400">L</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SEASON STAT COUNTERS -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 border border-emerald-500/30 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase font-extrabold block">TOP SCORER</span>
+                        <span class="text-xl font-black text-white font-display block">Casper Vincent Linz</span>
+                        <span class="text-2xl font-black text-emerald-400 font-display">7 GOALS</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase font-extrabold block">HIGHEST RATED</span>
+                        <span class="text-xl font-black text-white font-display block">Felix Urban</span>
+                        <span class="text-2xl font-black text-emerald-400 font-display">8.7 RATING</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase font-extrabold block">GOAL DIFFERENCE</span>
+                        <span class="text-3xl font-black text-emerald-400 font-display">+7 GD</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="strafen" class="py-16 px-4 bg-slate-900/50 border-y border-slate-800">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white font-display tracking-wide uppercase">
+                    <i class="fa-solid fa-jar text-gold-400 mr-2"></i> STRAFENKATALOG & BIER-KASSE
+                </h2>
+                <p class="text-slate-400 text-sm">Select infractions to calculate the penalty fine due for this weekend!</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8 border border-gold-500/30 glow-gold">
+                <div class="space-y-3 mb-8" id="strafenList">
+                    <!-- Fine Items populated dynamically -->
+                </div>
+
+                <!-- TOTAL CALCULATION BAR -->
+                <div class="bg-slate-950 rounded-xl p-6 border border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase font-bold block">TOTAL FINE DUE</span>
+                        <span id="totalFineEuro" class="text-4xl font-black text-gold-400 font-display">€0.00</span>
+                        <span id="totalCratesText" class="text-xs text-slate-400 block mt-0.5">+ 0 Crates of Ottakringer</span>
+                    </div>
+
+                    <button onclick="resetFines()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs uppercase tracking-wider transition">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Reset Calculator
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="wheel" class="py-16 px-4 max-w-5xl mx-auto">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white font-display tracking-wide uppercase">
+                <i class="fa-solid fa-beer-mug-empty text-gold-400 mr-2"></i> DRITTES HALBZEIT PUB WHEEL
+            </h2>
+            <p class="text-slate-400 text-sm">Where is 1. FC Court heading for post-match victory drinks in Liesing?</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-7 flex flex-col items-center">
+                <div class="relative">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 z-20 text-3xl text-gold-400 drop-shadow">
+                        <i class="fa-solid fa-caret-down"></i>
+                    </div>
+
+                    <canvas id="pubCanvas" width="320" height="320" class="rounded-full shadow-2xl border-4 border-slate-800 bg-slate-900"></canvas>
+                </div>
+
+                <button id="spinBtn" onclick="spinPubWheel()" class="mt-6 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-gold-400 to-amber-500 text-slate-950 font-black text-lg uppercase tracking-wider shadow-lg hover:brightness-110 active:scale-95 transition">
+                    <i class="fa-solid fa-dice mr-2"></i> SPIN FOR BEERS!
+                </button>
+            </div>
+
+            <div class="md:col-span-5 space-y-4">
+                <div class="glass-card rounded-2xl p-6 border border-slate-800 text-center">
+                    <span class="text-xs uppercase font-extrabold text-slate-400 block mb-1">SELECTED PUB</span>
+                    <h3 id="pubResult" class="text-2xl font-black text-gold-400 font-display">PRESS SPIN TO DECIDE!</h3>
+                    <p id="pubDesc" class="text-xs text-slate-400 mt-2 italic">May the best Liesing Beisl win.</p>
+                </div>
+
+                <div class="bg-slate-900 rounded-xl p-4 border border-slate-800">
+                    <span class="text-xs font-bold text-slate-400 uppercase block mb-2">POSSIBLE DESTINATIONS:</span>
+                    <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                        <li><strong class="text-white">Clubhaus Liesing:</strong> Right next to the pitch</li>
+                        <li><strong class="text-white">Schutzhaus Atzgersdorf:</strong> Schnitzel & Cold Lager</li>
+                        <li><strong class="text-white">Stammbeisl 1040:</strong> Classic team dive bar</li>
+                        <li><strong class="text-white">Centimeter Wien:</strong> Monster portions for strikers</li>
+                        <li><strong class="text-white">Tankstelle Beer-Bench:</strong> Late night emergency spot</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="spotify" class="py-16 px-4 bg-slate-900/50 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-4">
+                <i class="fa-brands fa-spotify text-emerald-400"></i> Locker Room Hype
+            </div>
+            
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white font-display tracking-wide uppercase mb-2">
+                1. FC COURT SHARED SPOTIFY PLAYLIST 🎧
+            </h2>
+            <p class="text-slate-400 text-sm mb-8">Add your favorite tracks for warmups & post-game beers at FC Inzersdorf!</p>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8 border border-emerald-500/30 glow-emerald max-w-2xl mx-auto">
+                <div class="mb-6 rounded-xl overflow-hidden shadow-2xl bg-slate-950 border border-slate-800">
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2qqr2wAwNeyDaqV9LcW6GS?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="https://open.spotify.com/playlist/2qqr2wAwNeyDaqV9LcW6GS" target="_blank" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-slate-950 font-black text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-spotify text-lg"></i> Open Shared Spotify Playlist
+                    </a>
+                    <button onclick="copyPlaylistLink()" class="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm uppercase tracking-wider transition border border-slate-700 flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-copy"></i> Copy Share Link
+                    </button>
+                </div>
+                <p id="copyToast" class="text-xs text-emerald-400 font-bold mt-3 hidden">Link copied to clipboard! Send it to the squad WhatsApp group.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 py-8 px-4 border-t border-slate-800 text-center text-xs text-slate-500 space-y-2">
+        <p class="font-bold text-slate-400">1. FC COURT WIEN • KLEINFELDLIGA FFBÖ (4. LIGA SÜD)</p>
+        <p>Match Location: FC Inzersdorf (Vorarlberger Allee 22, 1230 Wien)</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Live Kickoff Countdown Timer
+        function updateMatchCountdown() {
+            const targetDate = new Date('2026-10-25T19:00:00+02:00').getTime();
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('cd-days').innerText = String(days).padStart(2, '0');
+                document.getElementById('cd-hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('cd-mins').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('cd-secs').innerText = String(seconds).padStart(2, '0');
+            } else {
+                document.getElementById('cd-days').innerText = '00';
+                document.getElementById('cd-hours').innerText = '00';
+                document.getElementById('cd-mins').innerText = '00';
+                document.getElementById('cd-secs').innerText = '00';
+            }
+        }
+        setInterval(updateMatchCountdown, 1000);
+        updateMatchCountdown();
+
+        // Download .ics Calendar File
+        function downloadICS() {
+            const icsContent = 
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//1 FC Court Wien//FFBO Match//DE
+BEGIN:VEVENT
+SUMMARY:1. FC Court vs Biancorossi (4. Liga Süd)
+DESCRIPTION:Official Kleinfeldliga FFBÖ Match day. FC Inzersdorf ground.
+LOCATION:Vorarlberger Allee 22, 1230 Wien
+DTSTART:20261025T170000Z
+DTEND:20261025T180000Z
+END:VEVENT
+END:VCALENDAR`;
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', 'FC_Court_vs_Biancorossi.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Squad Roster Data
+        const playersData = {
+            passler_s: { name: 'Stephan Passler', pos: 'Torwart', number: '#TW', age: 25, nat: 'Österreich', goals: 0, rating: '8.5', cards: '0 Yellow', bio: 'Official starting goalkeeper for 1. FC Court.' },
+            mader_k: { name: 'Konstantin Mader', pos: 'Feldspieler', number: '#2', age: 25, nat: 'Österreich', goals: 1, rating: '7.8', cards: '0 Yellow', bio: 'Reliable outfield contributor.' },
+            traxler: { name: 'Patrick Traxler', pos: 'Feldspieler', number: '#3', age: 28, nat: 'Österreich', goals: 1, rating: '8.4', cards: '0 Yellow', bio: 'High performance player across all fixtures.' },
+            passler_p: { name: 'Paul Passler', pos: 'Feldspieler', number: '#4', age: 23, nat: 'Österreich', goals: 2, rating: '7.9', cards: '0 Yellow', bio: 'Agile field player with great energy.' },
+            mader_n: { name: 'Nikolaus Mader', pos: 'Feldspieler', number: '#5', age: 25, nat: 'Österreich', goals: 1, rating: '7.7', cards: '0 Yellow', bio: 'Composed field player in build-up play.' },
+            zischka: { name: 'Clemens Zischka', pos: 'Feldspieler', number: '#6', age: 26, nat: 'Österreich', goals: 0, rating: '7.6', cards: '0 Yellow', bio: 'Solid worker on the pitch.' },
+            koelbl: { name: 'Luis Kölbl', pos: 'Feldspieler', number: '#7', age: 25, nat: 'Österreich', goals: 2, rating: '8.0', cards: '0 Yellow', bio: 'Pacy outfield player with strong attacking instincts.' },
+            urban: { name: 'Felix Urban', pos: 'Feldspieler', number: '#8', age: 25, nat: 'Österreich', goals: 5, rating: '8.7', cards: '0 Yellow', bio: 'Highest rated 1. FC Court player on FFBÖ!' },
+            moratwetz: { name: 'Maximilian Moratwetz', pos: 'Feldspieler', number: '#9', age: 23, nat: 'Österreich', goals: 1, rating: '7.8', cards: '0 Yellow', bio: 'Dynamic attacking option.' },
+            klauser: { name: 'Tobias Klauser', pos: 'Feldspieler', number: '#10', age: 25, nat: 'Österreich', goals: 2, rating: '8.1', cards: '0 Yellow', bio: 'Creative playmaker with brilliant ball distribution.' },
+            stefan: { name: 'Erik Stefan', pos: 'Feldspieler', number: '#11', age: 22, nat: 'Österreich', goals: 2, rating: '8.0', cards: '0 Yellow', bio: 'Energetic field player with sharp pressing.' },
+            linz: { name: 'Casper Vincent Linz', pos: 'Feldspieler', number: '#12', age: 24, nat: 'Deutschland', goals: 7, rating: '8.2', cards: '1 Yellow', bio: 'Top scorer leading the attack with 7 goals.' },
+            dufka: { name: 'Phillip Dufka', pos: 'Feldspieler', number: '#13', age: 25, nat: 'Österreich', goals: 0, rating: '7.5', cards: '0 Yellow', bio: 'Hard-working field player.' },
+            markovic: { name: 'Filip Markovic', pos: 'Feldspieler', number: '#14', age: 23, nat: 'Österreich', goals: 2, rating: '7.9', cards: '0 Yellow', bio: 'Versatile field player creating options up front.' },
+            siebert: { name: 'Noah Siebert', pos: 'Feldspieler', number: '#15', age: 23, nat: 'Österreich', goals: 1, rating: '8.4', cards: '0 Yellow', bio: 'Defensive rock at the back for FC Court.' },
+            umealo: { name: 'Leonard Umealo-Wells', pos: 'Feldspieler', number: '#17', age: 25, nat: 'Deutschland', goals: 1, rating: '7.8', cards: '0 Yellow', bio: 'Strong physical field player.' },
+            henkes: { name: 'Ben Henkes', pos: 'Feldspieler', number: '#21', age: 25, nat: 'Österreich', goals: 3, rating: '8.4', cards: '0 Yellow', bio: 'Key player driving the team forward.' },
+            nikolic: { name: 'Daniel Nikolic', pos: 'Feldspieler', number: '#23', age: 25, nat: 'Österreich', goals: 0, rating: '7.4', cards: '0 Yellow', bio: 'Tactical option in squad rotation.' },
+            deisenhammer: { name: 'Tim Deisenhammer', pos: 'Feldspieler', number: '#25', age: 25, nat: 'Österreich', goals: 1, rating: '7.6', cards: '0 Yellow', bio: 'Dependable field player.' },
+            nowak: { name: 'Elias Nowak', pos: 'Feldspieler', number: '#27', age: 23, nat: 'Österreich', goals: 0, rating: '7.3', cards: '0 Yellow', bio: 'Young field player developing nicely.' },
+            kienbink: { name: 'Daniel Kienbink', pos: 'Feldspieler', number: '#37', age: 25, nat: 'Österreich', goals: 1, rating: '7.7', cards: '0 Yellow', bio: 'Disciplined and effective on the pitch.' },
+            gager: { name: 'Vinzenz Gager', pos: 'Feldspieler', number: '#44', age: 26, nat: 'Österreich', goals: 0, rating: '7.5', cards: '1 Yellow', bio: 'Tough-tackling field player.' },
+            muenter: { name: 'Philip Münter', pos: 'Feldspieler', number: '#57', age: 23, nat: 'Deutschland', goals: 1, rating: '7.6', cards: '0 Yellow', bio: 'Talented outfield player.' },
+            samwald: { name: 'Timon Samwald', pos: 'Feldspieler', number: '#69', age: 29, nat: 'Österreich', goals: 0, rating: '7.5', cards: '0 Yellow', bio: 'Experienced leader in the squad.' },
+            rassinger: { name: 'Maximilian Rassinger', pos: 'Feldspieler', number: '#70', age: 25, nat: 'Österreich', goals: 0, rating: '7.4', cards: '0 Yellow', bio: 'Reliable squad member.' },
+            laengle: { name: 'Viktor Längle', pos: 'Feldspieler', number: '#77', age: 25, nat: 'Österreich', goals: 1, rating: '7.7', cards: '0 Yellow', bio: 'Solid field player on wings and center.' },
+            schram: { name: 'Jakob Schram', pos: 'Feldspieler', number: '#80', age: 26, nat: 'Österreich', goals: 0, rating: '7.3', cards: '0 Yellow', bio: 'High effort field player.' },
+            voltmann: { name: 'Alexander Voltmann', pos: 'Feldspieler', number: '#99', age: 25, nat: 'Österreich', goals: 0, rating: '7.8', cards: '0 Yellow', bio: 'Reliable field player for 1. FC Court.' }
+        };
+
+        function selectPlayer(key) {
+            const p = playersData[key];
+            if (!p) return;
+
+            document.getElementById('pCardNum').innerText = p.number;
+            document.getElementById('pCardName').innerText = p.name;
+            document.getElementById('pCardPos').innerText = `${p.pos} • ${p.nat} • ${p.age} Jahre`;
+            document.getElementById('pCardBio').innerText = `"${p.bio}"`;
+            document.getElementById('pCardGoals').innerText = p.goals;
+            document.getElementById('pCardRating').innerText = p.rating;
+            document.getElementById('pCardYellows').innerText = p.cards.split(' ')[0];
+        }
+
+        function renderSquadList(filterText = '') {
+            const container = document.getElementById('squadContainer');
+            container.innerHTML = '';
+
+            Object.keys(playersData).forEach(k => {
+                const p = playersData[k];
+                const matchStr = `${p.name} ${p.number} ${p.pos} ${p.nat} ${p.age}`.toLowerCase();
+                if (filterText && !matchStr.includes(filterText.toLowerCase())) {
+                    return;
+                }
+
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between p-2 rounded-lg bg-slate-900 hover:bg-slate-800 cursor-pointer text-xs border border-slate-800/80 transition";
+                row.onclick = () => selectPlayer(k);
+                row.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="font-black text-emerald-400 w-8">${p.number}</span>
+                        <span class="font-bold text-white">${p.name}</span>
+                        <span class="text-[10px] text-slate-400">(${p.pos}, ${p.age}J)</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-[10px] text-slate-400 font-semibold">${p.nat}</span>
+                        <span class="font-extrabold text-gold-400">${p.goals} G</span>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function filterSquad() {
+            const query = document.getElementById('squadSearch').value;
+            renderSquadList(query);
+        }
+
+        function setTactics(formation) {
+            const midfield = document.getElementById('midfieldRow');
+            const defense = document.getElementById('defenseRow');
+
+            if (formation === '2-2-1') {
+                midfield.className = "flex justify-around items-center z-10 px-6";
+                defense.className = "flex justify-around items-center z-10 px-8";
+            } else if (formation === '3-1-1') {
+                midfield.className = "flex justify-center items-center z-10 px-6";
+                defense.className = "flex justify-between items-center z-10 px-4";
+            } else if (formation === '1-3-1') {
+                midfield.className = "flex justify-between items-center z-10 px-2";
+                defense.className = "flex justify-center items-center z-10 px-6";
+            }
+        }
+
+        // Strafenkatalog logic
+        const strafenData = [
+            { id: 1, text: 'Zu spät zum Treffpunkt (Late for Kickoff)', price: 5, crate: 0 },
+            { id: 2, text: 'Tunnel / Gurkerl im Training (Nutmegged)', price: 2, crate: 0 },
+            { id: 3, text: 'Gelbe Karte wegen Meckerns (Yellow Card Dissent)', price: 5, crate: 0 },
+            { id: 4, text: 'Schienbeinschoner vergessen (Forgot Shinguards)', price: 3, crate: 0 },
+            { id: 5, text: 'Rote Karte (Red Card Penalty)', price: 15, crate: 0 },
+            { id: 6, text: 'Fehlende Torjubel-Beteiligung (Missing Jubel)', price: 0, crate: 1 }
+        ];
+
+        function renderStrafen() {
+            const list = document.getElementById('strafenList');
+            list.innerHTML = '';
+
+            strafenData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition";
+                div.innerHTML = `
+                    <label class="flex items-center gap-3 cursor-pointer select-none">
+                        <input type="checkbox" onchange="calculateFines()" data-price="${item.price}" data-crate="${item.crate}" class="fine-checkbox w-5 h-5 accent-emerald-500 rounded cursor-pointer">
+                        <span class="text-xs md:text-sm text-slate-200 font-medium">${item.text}</span>
+                    </label>
+                    <span class="text-xs font-bold text-gold-400">
+                        ${item.price > 0 ? '€' + item.price.toFixed(2) : ''} ${item.crate > 0 ? '1 Kiste Ottakringer' : ''}
+                    </span>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function calculateFines() {
+            const checkboxes = document.querySelectorAll('.fine-checkbox');
+            let totalEuros = 0;
+            let totalCrates = 0;
+
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    totalEuros += parseFloat(cb.getAttribute('data-price'));
+                    totalCrates += parseInt(cb.getAttribute('data-crate'));
+                }
+            });
+
+            document.getElementById('totalFineEuro').innerText = '€' + totalEuros.toFixed(2);
+            document.getElementById('totalCratesText').innerText = `+ ${totalCrates} Crate(s) of Ottakringer owed!`;
+        }
+
+        function resetFines() {
+            const checkboxes = document.querySelectorAll('.fine-checkbox');
+            checkboxes.forEach(cb => cb.checked = false);
+            calculateFines();
+        }
+
+        // Pub wheel logic
+        let isSpinning = false;
+        let startAngle = 0;
+
+        const pubs = [
+            { name: "Clubhaus Liesing", desc: "50 meters from pitch. Cold Ottakringer on tap." },
+            { name: "Schutzhaus Atzgersdorf", desc: "Huge Schnitzel plates and outdoor beer garden." },
+            { name: "Stammbeisl 1040", desc: "Home base dive bar with jukebox and darts." },
+            { name: "Centimeter Wien", desc: "Carb load after a tough 50 minutes on synthetic pitch." },
+            { name: "Tankstelle Bench", desc: "Late night emergency fallback spot." }
+        ];
+
+        const colors = ["#10b981", "#f59e0b", "#059669", "#d97706", "#047857"];
+        const arc = Math.PI / (pubs.length / 2);
+
+        function drawPubWheel() {
+            const canvas = document.getElementById('pubCanvas');
+            if (!canvas || !canvas.getContext) return;
+            const ctx = canvas.getContext('2d');
+            const outsideRadius = 150;
+            const textRadius = 100;
+            const insideRadius = 30;
+
+            ctx.clearRect(0,0,320,320);
+
+            for(let i = 0; i < pubs.length; i++) {
+                const angle = startAngle + i * arc;
+                ctx.fillStyle = colors[i % colors.length];
+
+                ctx.beginPath();
+                ctx.arc(160, 160, outsideRadius, angle, angle + arc, false);
+                ctx.arc(160, 160, insideRadius, angle + arc, angle, true);
+                ctx.fill();
+
+                ctx.save();
+                ctx.fillStyle = "#0f172a";
+                ctx.font = "bold 11px Inter, sans-serif";
+                ctx.translate(160 + Math.cos(angle + arc / 2) * textRadius, 
+                              160 + Math.sin(angle + arc / 2) * textRadius);
+                ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                const text = pubs[i].name;
+                ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+                ctx.restore();
+            }
+        }
+
+        function spinPubWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+
+            const spinAngleStart = Math.random() * 10 + 10;
+            let spinTime = 0;
+            const spinTimeTotal = Math.random() * 3000 + 4000;
+
+            function rotateWheel() {
+                spinTime += 30;
+                if(spinTime >= spinTimeTotal) {
+                    stopRotateWheel();
+                    return;
+                }
+                const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+                startAngle += (spinAngle * Math.PI / 180);
+                drawPubWheel();
+                requestAnimationFrame(rotateWheel);
+            }
+            rotateWheel();
+
+            function stopRotateWheel() {
+                isSpinning = false;
+                const degrees = startAngle * 180 / Math.PI + 90;
+                const arcd = arc * 180 / Math.PI;
+                const index = Math.floor((360 - degrees % 360) / arcd) % pubs.length;
+                
+                document.getElementById('pubResult').innerText = pubs[index].name;
+                document.getElementById('pubDesc').innerText = `"${pubs[index].desc}"`;
+            }
+
+            function easeOut(t, b, c, d) {
+                const ts = (t/=d)*t;
+                const tc = ts*t;
+                return b+c*(tc + -3*ts + 3*t);
+            }
+        }
+
+        // Spotify link copy function
+        function copyPlaylistLink() {
+            const link = "https://open.spotify.com/playlist/2qqr2wAwNeyDaqV9LcW6GS";
+            const dummy = document.createElement('input');
+            document.body.appendChild(dummy);
+            dummy.value = link;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+
+            const toast = document.getElementById('copyToast');
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        // Initialize canvas and lists on window load
+        window.onload = function() {
+            renderSquadList();
+            selectPlayer('passler_s');
+            renderStrafen();
+            drawPubWheel();
+        };
+    </script>
+</body>
+</html>
